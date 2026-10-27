@@ -1,5 +1,7 @@
 # Sage Levanto for Codex
 
+> **Warning:** This is an example implementation built as a 1–2 day weekend project with AI agents. Before using it, decide whether its security and privacy model fits your needs. Once deployed, OpenAI Sites and Levanto Labs are trusted boundaries.
+
 Use Sage to screen incoming recruiter messages for scams and low-value outreach, so you only spend time reading plausible opportunities.
 
 This is the source for a **hosted custom Codex/ChatGPT plugin**. It is not a local environment-variable wrapper. Each person deploys a private copy with OpenAI Sites, opens its signed-in dashboard, and saves their Sage API key there. The key is encrypted before it is written to the Site database.
