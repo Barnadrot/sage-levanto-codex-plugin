@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Sage recruiter-message scam screener demo</title>
+  <desc id="desc">An anonymized real public scam email is routed by Sage to scam with confidence 1.00. The benchmark used 1,000 real public employment-related scam emails.</desc>
+  <defs>
+    <pattern id="grain" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M0 79.5H80M79.5 0V80" stroke="#123f7810" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3e9"/>
+      <stop offset="1" stop-color="#eee8da"/>
+    </linearGradient>
+    <clipPath id="landscapeClip"><rect x="1040" y="20" width="510" height="210" rx="16"/></clipPath>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#paper)"/>
+  <rect width="1600" height="900" fill="url(#grain)"/>
+
+  <!-- Levanto-inspired engraved horizon: rising sun, sea and mountain linework. -->
+  <g clip-path="url(#landscapeClip)" fill="none" stroke="#174f92" opacity=".56">
+    <circle cx="1342" cy="80" r="104" stroke-width="1.5"/>
+    <circle cx="1342" cy="80" r="93" stroke-width="1" opacity=".55"/>
+    <path d="M1015 196 1110 124 1165 168 1268 82 1372 168 1455 118 1580 206" stroke-width="2"/>
+    <path d="M1015 206 1110 134 1165 178 1268 92 1372 178 1455 128 1580 216" stroke-width="1"/>
+    <path d="M1010 218 Q1150 198 1290 218 T1580 218M1000 228 Q1140 208 1280 228 T1590 228" stroke-width="1" opacity=".7"/>
+    <path d="M1060 40v170M1080 28v182M1100 20v190M1120 18v192M1140 22v188M1160 30v180M1180 40v170M1200 52v158M1220 60v150M1240 66v144M1260 70v140M1280 72v138M1300 74v136M1320 74v136M1340 74v136M1360 74v136M1380 72v138M1400 68v142M1420 62v148M1440 52v158M1460 40v170M1480 28v182M1500 20v190" stroke-width=".6" opacity=".24"/>
+  </g>
+
+  <g fill="#123f78">
+    <text x="74" y="64" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="22" font-weight="700" letter-spacing="4">SAGE</text>
+    <text x="74" y="91" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="2">BY LEVANTO LABS · DECISION MODEL</text>
+    <text x="1526" y="64" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" letter-spacing="2">CHOICE / #001</text>
+  </g>
+
+  <text x="74" y="164" fill="#0c2f5d" font-family="Georgia, 'Times New Roman', serif" font-size="57" font-weight="700" letter-spacing="-1.4">Used Sage to screen recruiter scams.</text>
+  <text x="74" y="218" fill="#0c2f5d" font-family="Georgia, 'Times New Roman', serif" font-size="43" font-style="italic">Now I only read what survives two passes.</text>
+
+  <!-- Anonymized source message -->
+  <rect x="74" y="270" width="708" height="352" rx="10" fill="#fbf9f2" stroke="#174f92" stroke-width="1.5"/>
+  <rect x="74" y="270" width="708" height="52" rx="10" fill="#174f92"/>
+  <rect x="74" y="312" width="708" height="10" fill="#174f92"/>
+  <text x="100" y="303" fill="#f7f3e9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.55">ANONYMIZED + CONDENSED · REAL PUBLIC SCAM REPORT</text>
+  <text x="100" y="361" fill="#174f92" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" letter-spacing="1.2">SUBJECT  ADMINISTRATIVE ASSISTANT POSITION</text>
+  <line x1="100" y1="382" x2="756" y2="382" stroke="#174f92" opacity=".28"/>
+  <g fill="#1a3150" font-family="Georgia, 'Times New Roman', serif" font-size="26">
+    <text x="100" y="429">“Your background check is complete.</text>
+    <text x="100" y="469">Print and deposit the e-check today.</text>
+    <text x="100" y="509">Buy the required supplies immediately,</text>
+    <text x="100" y="549">then send us the deposit receipt.”</text>
+  </g>
+  <text x="100" y="592" fill="#6a7890" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12">IDENTITY, CONTACT DETAILS + LINKS REDACTED</text>
+
+  <!-- Decision response -->
+  <rect x="818" y="270" width="708" height="352" rx="10" fill="#0d376a"/>
+  <text x="848" y="306" fill="#b7cff0" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" letter-spacing="1.5">HOW SHOULD THIS MESSAGE BE ROUTED?</text>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="15">
+    <rect x="848" y="334" width="142" height="38" rx="19" fill="#f7f3e9"/>
+    <circle cx="872" cy="353" r="6" fill="#174f92"/>
+    <text x="890" y="358" fill="#0d376a" font-weight="700">SCAM</text>
+    <text x="1014" y="358" fill="#9db8dc">LOW VALUE</text>
+    <text x="1148" y="358" fill="#9db8dc">SECOND PASS</text>
+  </g>
+  <text x="848" y="452" fill="#f7f3e9" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="700">SCAM</text>
+  <text x="1496" y="451" text-anchor="end" fill="#f7f3e9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="27">1.00</text>
+  <text x="1496" y="477" text-anchor="end" fill="#aac3e5" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11" letter-spacing="1.5">CONFIDENCE</text>
+  <line x1="848" y1="490" x2="1496" y2="490" stroke="#8fb3df" opacity=".35"/>
+  <text x="848" y="526" fill="#aac3e5" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" letter-spacing="1.3">SIGNALS</text>
+  <g fill="#f7f3e9" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14">
+    <text x="848" y="557">NO INTERVIEW</text><text x="1004" y="557">·</text>
+    <text x="1028" y="557">FAKE CHECK</text><text x="1160" y="557">·</text>
+    <text x="1184" y="557">FORCED PURCHASE</text><text x="1375" y="557">·</text>
+    <text x="1399" y="557">URGENCY</text>
+  </g>
+  <rect x="848" y="580" width="648" height="25" rx="12.5" fill="#f7f3e9"/>
+  <text x="1172" y="598" text-anchor="middle" fill="#0d376a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="2">ROUTE → BLOCK</text>
+
+  <!-- Benchmark evidence -->
+  <text x="74" y="680" fill="#174f92" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="700" letter-spacing="2">BLIND PUBLIC-CORPUS TEST · 1,000 REAL EMPLOYMENT-RELATED SCAM EMAILS · 0 SYNTHETIC</text>
+  <line x1="74" y1="699" x2="1526" y2="699" stroke="#174f92" stroke-width="1.5"/>
+  <g fill="#0c2f5d">
+    <text x="74" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">506</text>
+    <text x="74" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">AUTO-BLOCKED</text>
+    <text x="356" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">494</text>
+    <text x="356" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">TO CODEX SECOND PASS</text>
+    <text x="638" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">0</text>
+    <text x="638" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">SILENTLY CLEARED</text>
+    <text x="952" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">0 / 100</text>
+    <text x="952" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">LEGIT CONTROLS AUTO-BLOCKED</text>
+  </g>
+  <line x1="74" y1="832" x2="1526" y2="832" stroke="#174f92" opacity=".35"/>
+  <text x="74" y="860" fill="#526b88" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5">PROTECTED = BLOCKED OR ESCALATED · 95% CI 99.62–100% · PUBLIC-CORPUS BENCHMARK, NOT PRODUCTION-INBOX ACCURACY</text>
+  <text x="1526" y="860" text-anchor="end" fill="#174f92" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="700">SAGE RECRUITER SCREENER / 2026-10-16</text>
+</svg>

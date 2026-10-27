@@ -1,0 +1,25 @@
+{
+  "name": "sage-levanto-codex-plugin",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate:source": "node scripts/validate-source.mjs",
+    "validate": "node scripts/validate-artifact.mjs",
+    "test": "node --test",
+    "check": "npm run validate:source && npm test",
+    "validate:synthetic": "node scripts/score-synthetic-validation.mjs",
+    "benchmark:generate": "node scripts/generate-provenance-benchmark.mjs",
+    "benchmark:audit": "node scripts/audit-provenance-benchmark.mjs",
+    "benchmark:emscad:build": "node scripts/build-emscad-outreach-benchmark.mjs",
+    "benchmark:emscad:audit": "node scripts/audit-emscad-outreach-benchmark.mjs",
+    "benchmark:real-scam:build": "node scripts/build-real-job-scam-benchmark.mjs",
+    "benchmark:real-scam:audit": "node scripts/audit-real-job-scam-benchmark.mjs",
+    "benchmark:real-scam:save": "node scripts/save-real-scam-results.mjs",
+    "benchmark:real-scam:score": "node scripts/score-real-scam-results.mjs",
+    "benchmark:real-scam:map-prior": "node scripts/map-prior-results-to-strict-benchmark.mjs",
+    "benchmark:real-scam:merge": "node scripts/merge-strict-benchmark-results.mjs",
+    "render:share": "node scripts/render-share-card.mjs"
+  }
+}

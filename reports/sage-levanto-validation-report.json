@@ -1,0 +1,49 @@
+{
+  "report": "Sage Levanto message-screening validation",
+  "generated_at": "2026-10-16",
+  "model": [
+    "levanto-sage-v1.4"
+  ],
+  "decision_policy": "Sage choice in quality mode; SCAM becomes an advisory flag at confidence >= 0.80. LOW_VALUE becomes an advisory flag only with an independently verified profile match; otherwise escalated. The plugin does not mutate the mailbox.",
+  "real_public_scam_email_test": {
+    "cases": 1000,
+    "source": {
+      "name": "The University Scam Emails Corpus",
+      "authors": "Grace Ciambrone and Shomir Wilson",
+      "citation": "Creation and Analysis of a Corpus of Scam Emails Targeting Universities, The Web Conference 2023",
+      "url": "https://shomir.net/data/university_scams/index.html",
+      "license": "CC BY-NC-SA 2.0",
+      "archive_sha256": "00542394336a08113fb5997f5250bc42ebbffffd94b5683a68df2fb46778321a",
+      "emails_with_bodies": 5155
+    },
+    "scam_advisory_flags": 506,
+    "escalated_for_review": 494,
+    "low_value_routes": 0,
+    "protected_rate": 1,
+    "protected_rate_wilson_95": [
+      0.996173241514445,
+      1
+    ],
+    "scam_flag_recall": 0.506,
+    "scam_flag_recall_wilson_95": [
+      0.47504885836338107,
+      0.5369052205347923
+    ]
+  },
+  "legitimate_control_calibration": {
+    "cases": 100,
+    "source": "EMSCAD legitimate job-ad controls (outreach-shaped; not private recruiter DMs)",
+    "scam_advisory_flags": 0,
+    "observed_false_positive_rate": 0,
+    "false_positive_rate_wilson_95": [
+      3.469446951953614e-18,
+      0.03699349820698568
+    ]
+  },
+  "limitations": [
+    "The 1,000-message corpus contains real public university scam emails selected for employment-related language; it is not a random sample of the user's inbox.",
+    "The legitimate controls are real job advertisements transformed into outreach-shaped inputs, not recruiter DMs.",
+    "Protected means a SCAM advisory flag or escalation, not that Sage independently labelled every message SCAM.",
+    "No production accuracy or zero-error claim is made."
+  ]
+}

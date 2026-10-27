@@ -1,0 +1,10 @@
+dist/
+.env
+.env.*
+!.env.example
+.openai/hosting.json
+site*.tar.gz
+assets/
+fixtures/
+node_modules/
+*.log
