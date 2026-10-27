@@ -61,7 +61,7 @@ Private OpenAI Site ── HKDF-SHA-256(user ID) ── AES-256-GCM + random IV
 Codex ── authenticated /mcp call ── decrypt in Worker memory ── Sage API
                                                            │
                                                            ▼
-                                            decision returned; message discarded
+                              decision returned; request content not persisted
 ```
 
 Sites supplies a Site-scoped authenticated user ID to both the dashboard API and MCP endpoint. The Worker derives a distinct encryption key for each user from the protected deployment secret. D1 stores encrypted API keys plus non-message operational metadata: the Site-scoped user ID, ciphertext IVs, timestamps, aggregate reports, usage buckets, guard state, and alert state. It does not store recruiter-message bodies, senders, subjects, employers, source message IDs, or Sage responses.

@@ -36,7 +36,7 @@ An earlier broad filter was rejected because substring matching could admit unre
 | Routed to `LOW_VALUE` | 0 | 0.0% |
 
 - Protected routing (`SCAM` flag or escalation): 100%; Wilson 95% CI 99.62–100%.
-- Automatic scam-block recall: 50.6%; Wilson 95% CI 47.50–53.69%.
+- Scam advisory-flag recall: 50.6%; Wilson 95% CI 47.50–53.69%.
 
 “Protected” means the message received a `SCAM` advisory flag or was escalated. It does **not** mean Sage independently identified every scam.
 
