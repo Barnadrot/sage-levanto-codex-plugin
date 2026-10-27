@@ -55,7 +55,8 @@ Signed-in browser
 Private OpenAI Site ── HKDF-SHA-256(user ID) ── AES-256-GCM + random IV
     │                                                   │
     │                                                   ▼
-    │                                           D1 ciphertext only
+    │                              D1: encrypted API keys plus
+    │                              non-message operational metadata
     │
 Codex ── authenticated /mcp call ── decrypt in Worker memory ── Sage API
                                                            │
@@ -63,7 +64,13 @@ Codex ── authenticated /mcp call ── decrypt in Worker memory ── Sage
                                             decision returned; message discarded
 ```
 
-Sites supplies a Site-scoped authenticated user ID to both the dashboard API and MCP endpoint. The Worker derives a distinct encryption key for each user from the protected deployment secret. The D1 database stores ciphertext, IVs, aggregate reports, and rate-guard counters; it does not store recruiter-message bodies.
+Sites supplies a Site-scoped authenticated user ID to both the dashboard API and MCP endpoint. The Worker derives a distinct encryption key for each user from the protected deployment secret. D1 stores encrypted API keys plus non-message operational metadata: the Site-scoped user ID, ciphertext IVs, timestamps, aggregate reports, usage buckets, guard state, and alert state. It does not store recruiter-message bodies, senders, subjects, employers, source message IDs, or Sage responses.
+
+### Trust model
+
+This is server-side encryption, not end-to-end encryption. Whoever controls the deployed Worker code and its `SAGE_KEY_ENCRYPTION_KEY` can potentially decrypt stored Sage API keys. OpenAI Sites/Cloudflare runtime execution, authenticated identity headers, secret handling, and the deployment owner's account are therefore inside the trusted computing base.
+
+The encryption primarily protects against a database-only disclosure, accidental database export, and ciphertext tampering or reassignment. It does not protect a user from a malicious or compromised deployment operator who controls both the runtime and master secret. That is an expected property of this architecture rather than, by itself, a vulnerability.
 
 ## What is intentionally absent from this repository
 
@@ -88,12 +95,21 @@ The non-technical Codex flow above is recommended. If you are deploying manually
 
 The build output is `dist/server/index.js` plus the deployment-specific `dist/.openai/hosting.json`.
 
+## Publishing model
+
+Publishing this GitHub repository lets other people inspect the source and deploy their own private Site/plugin. It does not automatically list one shared plugin in the public Codex/ChatGPT plugin directory, and users should not connect to the author's private deployment.
+
+A public directory listing for the canonical Site-generated plugin is a separate release process. It requires verified publisher identity, public website/support/privacy/terms URLs, production icons, a reviewer-accessible demo recording, positive and negative MCP review cases, reviewer access to a dedicated test deployment, commerce and country declarations, and submission through the applicable OpenAI review flow. None of those facts or legal commitments are invented in this repository.
+
+Before making the repository public, enable GitHub private vulnerability reporting so sensitive reports can be submitted without opening a public issue. The reporting policy is in [SECURITY.md](SECURITY.md).
+
 ## Security summary
 
 - AES-256-GCM with a fresh 96-bit IV protects each stored Sage key.
 - HKDF-SHA-256 derives a separate key per Site-scoped user ID.
 - Version 3 ciphertext authenticates its user and protocol context as AES-GCM additional data.
 - The master key is a Sites runtime secret, separate from D1 and absent from Git.
+- Control of both the Worker runtime and master secret implies potential access to stored API keys; this is server-side, not end-to-end, encryption.
 - API-key responses, dashboard responses, and the dashboard page use `Cache-Control: no-store`.
 - Browser key mutation is same-origin only; key payloads are size-limited.
 - Screening inputs are bounded, treated as untrusted, and never executed.

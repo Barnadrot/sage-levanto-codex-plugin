@@ -31,31 +31,37 @@ const toolDefinitions = [
     name: "sage_screen_recruiter_message",
     description: "Run Levanto Sage first-pass screening on one untrusted recruiter email or LinkedIn InMail. Returns SCAM, LOW_VALUE, or SECOND_PASS. SECOND_PASS requires a human/Codex value review; it never means trusted or automatically high value.",
     inputSchema: { type: "object", additionalProperties: false, required: ["message"], properties: { message: messageSchema } },
+    annotations: { readOnlyHint: false, openWorldHint: true, destructiveHint: false },
   },
   {
     name: "sage_screen_recruiter_batch",
     description: "Run the same first-pass Sage screening on up to 20 recruiter-email or LinkedIn-InMail records. Use only after Gmail has been narrowed to plausible candidates; do not send a whole mailbox.",
     inputSchema: { type: "object", additionalProperties: false, required: ["messages"], properties: { messages: { type: "array", minItems: 1, maxItems: MAX_BATCH_SIZE, items: messageSchema } } },
+    annotations: { readOnlyHint: false, openWorldHint: true, destructiveHint: false },
   },
   {
     name: "sage_record_private_screening_summary",
     description: "Save only aggregate counts from a completed private recruiter screening run for the caller's Sage Levanto dashboard. Never include sender names, companies, subjects, message text, or message IDs.",
     inputSchema: { type: "object", additionalProperties: false, required: ["summary"], properties: { summary: { type: "object", additionalProperties: false, required: ["screened", "needs_review", "low_value", "scams"], properties: { screened: { type: "integer", minimum: 0 }, needs_review: { type: "integer", minimum: 0 }, low_value: { type: "integer", minimum: 0 }, scams: { type: "integer", minimum: 0 }, report_date: { type: "string", description: "Optional ISO timestamp for this run." } } } } },
+    annotations: { readOnlyHint: false, openWorldHint: false, destructiveHint: false },
   },
   {
     name: "sage_get_private_dashboard",
     description: "Return the caller's Sage-key configuration status and the most recent aggregate-only screening report. It never returns a key, email content, sender, company, subject, or message ID.",
     inputSchema: { type: "object", additionalProperties: false, properties: {} },
+    annotations: { readOnlyHint: true, openWorldHint: false, destructiveHint: false },
   },
   {
     name: "sage_get_private_security_status",
     description: "Return only the caller's private Sage decision-volume guard status and any unnotified safety alert. It never returns keys, email content, senders, subjects, companies, or message IDs.",
     inputSchema: { type: "object", additionalProperties: false, properties: {} },
+    annotations: { readOnlyHint: true, openWorldHint: false, destructiveHint: false },
   },
   {
     name: "sage_mark_private_security_alert_notified",
     description: "Mark one private Sage safety alert as notified after it has been delivered to the account owner.",
     inputSchema: { type: "object", additionalProperties: false, required: ["alert_id"], properties: { alert_id: { type: "integer", minimum: 1 } } },
+    annotations: { readOnlyHint: false, openWorldHint: false, destructiveHint: false },
   },
 ];
 
@@ -144,18 +150,22 @@ function validateMessage(message) {
 function userId(request) { return request.headers.get("oai-authenticated-user-id"); }
 function b64(bytes) { let s = ""; for (const byte of bytes) s += String.fromCharCode(byte); return btoa(s); }
 function unb64(text) { const s = atob(text); return Uint8Array.from(s, (c) => c.charCodeAt(0)); }
-async function legacyCryptoKey(env) {
+function masterKeyBytes(env) {
   if (!env.SAGE_KEY_ENCRYPTION_KEY) throw new Error("Secure credential storage is not configured yet.");
-  return crypto.subtle.importKey("raw", unb64(env.SAGE_KEY_ENCRYPTION_KEY), { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+  let bytes;
+  try { bytes = unb64(env.SAGE_KEY_ENCRYPTION_KEY); } catch { throw new Error("Secure credential storage is misconfigured."); }
+  if (bytes.byteLength !== 32) throw new Error("Secure credential storage requires a base64-encoded 32-byte key.");
+  return bytes;
+}
+async function legacyCryptoKey(env) {
+  return crypto.subtle.importKey("raw", masterKeyBytes(env), { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
 }
 async function userCryptoKey(env, id) {
-  if (!env.SAGE_KEY_ENCRYPTION_KEY) throw new Error("Secure credential storage is not configured yet.");
-  const master = await crypto.subtle.importKey("raw", unb64(env.SAGE_KEY_ENCRYPTION_KEY), "HKDF", false, ["deriveKey"]);
+  const master = await crypto.subtle.importKey("raw", masterKeyBytes(env), "HKDF", false, ["deriveKey"]);
   return crypto.subtle.deriveKey({ name: "HKDF", hash: "SHA-256", salt: new TextEncoder().encode("sage-levanto-key-v2"), info: new TextEncoder().encode(id) }, master, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
 }
 async function userCryptoKeyV3(env, id) {
-  if (!env.SAGE_KEY_ENCRYPTION_KEY) throw new Error("Secure credential storage is not configured yet.");
-  const master = await crypto.subtle.importKey("raw", unb64(env.SAGE_KEY_ENCRYPTION_KEY), "HKDF", false, ["deriveKey"]);
+  const master = await crypto.subtle.importKey("raw", masterKeyBytes(env), "HKDF", false, ["deriveKey"]);
   return crypto.subtle.deriveKey({ name: "HKDF", hash: "SHA-256", salt: new TextEncoder().encode("sage-levanto-key-v3"), info: new TextEncoder().encode(id) }, master, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
 }
 function userKeyAad(id) { return new TextEncoder().encode(`sage-levanto:user-key:v3:${id}`); }

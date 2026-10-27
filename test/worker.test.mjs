@@ -124,6 +124,23 @@ test("private routes require the Sites authenticated user header", async () => {
   assert.equal((await response.json()).error, "Sign in to Sage Levanto before using private credentials or reports.");
 });
 
+test("MCP tools declare review annotations and reject a malformed master secret", async () => {
+  let response = await worker.fetch(request("/mcp", { method: "POST", body: { jsonrpc: "2.0", id: 3, method: "tools/list" } }), {});
+  const listed = await response.json();
+  assert.ok(listed.result.tools.length >= 6);
+  for (const tool of listed.result.tools) {
+    assert.equal(typeof tool.annotations.readOnlyHint, "boolean");
+    assert.equal(typeof tool.annotations.openWorldHint, "boolean");
+    assert.equal(typeof tool.annotations.destructiveHint, "boolean");
+  }
+
+  const db = new MemoryD1();
+  response = await worker.fetch(request("/api/sage-key", { method: "PUT", body: { api_key: "sage_test_key_that_is_long_enough" } }), { DB: db, SAGE_KEY_ENCRYPTION_KEY: Buffer.alloc(16, 1).toString("base64") });
+  assert.equal(response.status, 500);
+  assert.equal(db.v3.size, 0);
+  assert.equal((await response.json()).error, "The private request could not be completed.");
+});
+
 test("a deployed v2 key migrates to authenticated v3 storage on first use", async () => {
   const db = new MemoryD1();
   const master = Buffer.alloc(32, 11).toString("base64");

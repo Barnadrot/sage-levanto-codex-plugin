@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">Sage recruiter-message scam screener demo</title>
-  <desc id="desc">An anonymized real public scam email is routed by Sage to scam with confidence 1.00. The benchmark used 1,000 real public employment-related scam emails.</desc>
+  <desc id="desc">An anonymized real public scam email receives a Sage scam advisory flag with confidence 1.00. The benchmark used 1,000 real public employment-related scam emails.</desc>
   <defs>
     <pattern id="grain" width="80" height="80" patternUnits="userSpaceOnUse">
       <path d="M0 79.5H80M79.5 0V80" stroke="#123f7810" stroke-width="1"/>
@@ -71,22 +71,22 @@
     <text x="1399" y="557">URGENCY</text>
   </g>
   <rect x="848" y="580" width="648" height="25" rx="12.5" fill="#f7f3e9"/>
-  <text x="1172" y="598" text-anchor="middle" fill="#0d376a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="2">ROUTE → BLOCK</text>
+  <text x="1172" y="598" text-anchor="middle" fill="#0d376a" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="2">ROUTE → FLAG + WARN</text>
 
   <!-- Benchmark evidence -->
   <text x="74" y="680" fill="#174f92" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="700" letter-spacing="2">BLIND PUBLIC-CORPUS TEST · 1,000 REAL EMPLOYMENT-RELATED SCAM EMAILS · 0 SYNTHETIC</text>
   <line x1="74" y1="699" x2="1526" y2="699" stroke="#174f92" stroke-width="1.5"/>
   <g fill="#0c2f5d">
     <text x="74" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">506</text>
-    <text x="74" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">AUTO-BLOCKED</text>
+    <text x="74" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">SAGE SCAM FLAGS</text>
     <text x="356" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">494</text>
     <text x="356" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">TO CODEX SECOND PASS</text>
     <text x="638" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">0</text>
-    <text x="638" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">SILENTLY CLEARED</text>
+    <text x="638" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">LOW-VALUE ROUTES</text>
     <text x="952" y="778" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">0 / 100</text>
-    <text x="952" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">LEGIT CONTROLS AUTO-BLOCKED</text>
+    <text x="952" y="806" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="12" letter-spacing="1.2">LEGIT CONTROLS SCAM-FLAGGED</text>
   </g>
   <line x1="74" y1="832" x2="1526" y2="832" stroke="#174f92" opacity=".35"/>
-  <text x="74" y="860" fill="#526b88" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5">PROTECTED = BLOCKED OR ESCALATED · 95% CI 99.62–100% · PUBLIC-CORPUS BENCHMARK, NOT PRODUCTION-INBOX ACCURACY</text>
+  <text x="74" y="860" fill="#526b88" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5">PROTECTED = SCAM-FLAGGED OR ESCALATED · 95% CI 99.62–100% · PUBLIC-CORPUS BENCHMARK, NOT PRODUCTION-INBOX ACCURACY</text>
   <text x="1526" y="860" text-anchor="end" fill="#174f92" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="700">SAGE RECRUITER SCREENER / 2026-10-16</text>
 </svg>

@@ -5,8 +5,9 @@
 The Site stores only:
 
 - a Sage API key encrypted for the authenticated Site user;
-- aggregate screening counts;
-- rolling usage counters and security-alert state.
+- the Site-scoped authenticated user ID and storage timestamps;
+- aggregate screening counts; and
+- rolling usage counters, guard state, and security-alert state.
 
 Recruiter-message bodies, senders, subjects, employers, source IDs, and Sage responses are processed transiently and are not written to D1 by this application.
 
@@ -15,7 +16,7 @@ Recruiter-message bodies, senders, subjects, employers, source IDs, and Sage res
 1. The owner creates a random 32-byte `SAGE_KEY_ENCRYPTION_KEY` and stores it as a protected Sites runtime secret.
 2. For each Site-scoped user ID, the Worker derives an AES-256 key with HKDF-SHA-256 and a versioned salt.
 3. The Sage API key is encrypted with AES-256-GCM, a fresh random 96-bit IV, a 128-bit authentication tag, and versioned user-bound additional authenticated data.
-4. D1 stores only the ciphertext and IV. The master secret is not stored in D1 or Git.
+4. For the Sage credential, D1 stores ciphertext and an IV rather than plaintext. D1 also stores non-message operational metadata: the Site-scoped user ID, timestamps, aggregate reports, usage buckets, guard state, and alert state. The master secret is not stored in D1 or Git.
 5. The key is decrypted only in Worker memory immediately before calling Sage.
 
 Version 3 automatically migrates older v1/v2 ciphertext after successful decryption. The old row is deleted only after the v3 row has been written.
@@ -37,10 +38,11 @@ Version 3 automatically migrates older v1/v2 ciphertext after successful decrypt
 
 ## Trust boundaries and residual risk
 
-- OpenAI Sites/Cloudflare Worker execution, authentication headers, D1, and runtime-secret handling are trusted platform components.
+- This is server-side encryption, not end-to-end encryption. Whoever controls the deployed Worker code and `SAGE_KEY_ENCRYPTION_KEY` can potentially decrypt stored Sage API keys. That capability is an expected consequence of a server that must decrypt a key to call Sage; it is not, by itself, evidence of a vulnerability.
+- OpenAI Sites/Cloudflare Worker execution, authentication headers, runtime-secret handling, the deployment owner's account, and the deployed source are trusted components. Compromise of that trusted computing base can expose decrypted credentials during use.
 - Sage receives the recruiter content selected for screening and the caller's API credential in the outbound HTTPS request. Review Levanto's data policy before use.
 - Gmail and LinkedIn access are separate integrations. This plugin does not grant itself mailbox access.
-- A compromise of both D1 ciphertext and the production master secret can expose stored Sage keys. A managed KMS/HSM with non-exportable keys would reduce that risk but is outside this zero-additional-service design.
+- A database-only disclosure does not reveal Sage keys without the deployment secret. A compromise of both D1 ciphertext and the production master secret—or control of the live Worker runtime—can expose them. A managed KMS/HSM with non-exportable keys would reduce some operator and key-extraction risks but is outside this zero-additional-service design.
 - AES-256/HKDF-SHA-256 are conventional symmetric primitives. This is not a post-quantum authenticated key-exchange protocol. AES-256 is generally viewed as retaining about 128 bits of brute-force security under Grover's algorithm.
 - The page uses inline script/style with CSP allowances because the Worker is a single-file Site. User-controlled text is written with `textContent`, not HTML, but separating static assets and adopting nonce/hash-based CSP would be a further hardening step.
 
@@ -53,4 +55,4 @@ Version 3 automatically migrates older v1/v2 ciphertext after successful decrypt
 
 ## Reporting
 
-Do not open a public issue containing keys, ciphertext, user identifiers, private messages, or deployment IDs. Contact the repository owner privately with a minimal reproduction and redacted evidence.
+Do not open a public issue containing keys, ciphertext, user identifiers, private messages, or deployment IDs. Use GitHub's private vulnerability reporting for this repository with a minimal reproduction and redacted evidence. The repository owner should enable that feature before making the repository public.
